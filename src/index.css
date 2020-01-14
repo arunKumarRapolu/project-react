@@ -7,3 +7,80 @@
 .ft-sz-12 {
     font-size: 12px;
 }
+.loginButton {
+    color: white;
+    border: 1px solid #ddd;
+}
+.navbar {
+    padding: 0px !important;
+}
+.pl-15 {
+    padding-left: 15px;
+}
+.md-form .prefix.active {
+    color: #2bbbad !important
+}
+.md-form.md-outline input[type="text"]:focus:not([readonly]) + label {
+    color: #2bbbad !important;
+}
+.md-form.md-outline input[type="text"]:focus:not([readonly]) {
+    border-color:  #2bbbad !important;
+    box-shadow: inset 0 0 0 1px #2bbbad !important;
+}
+.container {
+    max-width: 80% !important;
+}
+.searchInput {
+    float: right;
+}
+.dealsContainer {
+    margin-top:15px;
+}
+.dealscaurosal {
+    font-size: 20px;
+    font-weight: bold;
+}
+.dealsImageView {
+  width:250px;
+}
+.dealsImageText {
+  font-weight: bold;
+  font-size: 14px;
+  color: #444444;
+}
+.slick-slide {
+margin: 0px 10px;
+}
+
+.slick-slide img {
+width: 100%;
+}
+
+.slick-disabled {
+  opacity: 0.2;
+}
+.slick-prev, .slick-next{
+  top:47%;
+}
+.slick-next, .slick-prev {
+  right: -10px;
+}
+.mbfoot{
+  background-color: #2bbbad !important
+}
+.mt-7 {
+  margin-top: 7%;
+}
+.dropdown-menu {
+  right: 0;
+  left: auto !important;
+  top:20% !important;
+}
+.dropdown-item:focus, .dropdown-item:hover{
+  color: #2bbbad !important
+}
+.dropdown .dropdown-menu .dropdown-item:active{
+  background-color: #2bbbad !important
+}
+
+
