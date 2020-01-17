@@ -82,5 +82,18 @@ width: 100%;
 .dropdown .dropdown-menu .dropdown-item:active{
   background-color: #2bbbad !important
 }
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.md-form {
+  margin-bottom: 0 !important;
+}
+.invalidMsg {
+  color: red;
+  margin-left: 5%;
+}
 
 
