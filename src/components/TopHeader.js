@@ -5,13 +5,14 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 import { connect } from 'react-redux';
+import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
 import { userActions } from '../actions/userActions';
+import { thisTypeAnnotation } from "@babel/types";
 
 class TopHeader extends Component {
     constructor(props){
         super(props);
-        console.log(this.props);
         this.state = {
             isOpen: false,
             modal14: false,
@@ -29,9 +30,11 @@ class TopHeader extends Component {
             reg_pwd:null,
             reg_pwd_valid:true,
             reg_cnf_pwd:null,
-            reg_cnf_pwd_valid:true
+            reg_cnf_pwd_valid:true,
+            change_variable : false
           };
           this.handleSubmit = this.handleSubmit.bind(this);
+          this.gotoSignUp = this.gotoSignUp.bind(this);
     }
     
       
@@ -59,7 +62,7 @@ class TopHeader extends Component {
           reg_cnf_pwd_valid:true
         });
       }
-      gotoSignUp = () => {
+      gotoSignUp(){
         this.setState({
           login_mobile : '',
           login_mobile_valid : true,
@@ -78,7 +81,7 @@ class TopHeader extends Component {
           signIn:false
         })
       }
-      gotoSignIn = () => {
+      gotoSignIn() {
         this.setState({
           login_mobile : '',
           login_mobile_valid : true,
@@ -97,8 +100,8 @@ class TopHeader extends Component {
           signIn:true
         })
       }
-      handleSubmit(e) {
-        e.preventDefault();
+      async handleSubmit(e) {
+       e.preventDefault();
       if(this.state.signIn){
         let phoneNum = this.state.login_mobile
         let phonenoreg = /^\d{10}$/;
@@ -111,9 +114,11 @@ class TopHeader extends Component {
           this.setState({login_password_valid:false});
           proceed = false;
         }
-
-        if(proceed)
-        this.props.login(phoneNum, this.state.login_password);
+        
+        if(proceed){
+        const res = await this.props.login(phoneNum, this.state.login_password,this.toggle);
+        console.log(res);
+        }
       }
       else{
         let reg_proceed = true;
@@ -147,7 +152,7 @@ class TopHeader extends Component {
             email : this.state.reg_email,
             password : this.state.reg_pwd
           }
-          this.props.register(newUser);
+          this.props.register(newUser,this.toggle);
         }
       }
     }
@@ -155,11 +160,19 @@ class TopHeader extends Component {
       let name = event.target.name;
       let invalidEle = name+"_valid"
       this.setState({ [event.target.name]: event.target.value , [invalidEle]:true });
+      if(this.state.signIn)
+      this.props.clearSignInErrors()
+      else
+      this.props.clearSignUpErrors()
     };
+    signOut = () => {
+      window.localStorage.removeItem('user');
+      this.props.logout();
+    }
     render() {
         return (
           <div>
-            <MDBNavbar color="default-color" dark expand="md">
+            <MDBNavbar color="default-color" dark expand="md" className="mainHeader">
         <MDBNavbarBrand>
         <MDBNavLink to="/">
           <strong className="white-text">Navbar</strong>
@@ -190,24 +203,28 @@ class TopHeader extends Component {
             </MDBNavItem>
           </MDBNavbarNav>
           <MDBNavbarNav right>
+          {!this.props.loggedIn?
             <MDBNavItem>
-              <MDBNavLink className="waves-effect waves-light" to="#!">
+              <MDBNavLink className="waves-effect waves-light" to="#">
                 <MDBBtn className="loginButton" onClick={this.toggle(14)} >Login / SignUp</MDBBtn>
               </MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem className="mt-7">
-              <MDBDropdown>
-                <MDBDropdownToggle nav caret>
-                  <MDBIcon icon="user" />
-                </MDBDropdownToggle>
-                <MDBDropdownMenu >
-                  <MDBDropdownItem className="dropdownItem" href="#!">Action</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
-            </MDBNavItem>
+            </MDBNavItem>:
+          <MDBNavItem >
+          <MDBDropdown>
+            <MDBDropdownToggle nav caret>
+              <MDBIcon icon="user" className="mr-10" />
+              <span>{this.props.user.user.name}</span>
+            </MDBDropdownToggle>
+            <MDBDropdownMenu >
+              <MDBDropdownItem className="dropdownItem" href="#!">My Profile</MDBDropdownItem>
+              <MDBDropdownItem href="#!">My Orders</MDBDropdownItem>
+              <MDBDropdownItem href="#!">Settings</MDBDropdownItem>
+              <MDBDropdownItem onClick={this.signOut} href="#">Sign Out</MDBDropdownItem>
+            </MDBDropdownMenu>
+          </MDBDropdown>
+        </MDBNavItem>
+          }
+            
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
@@ -218,7 +235,8 @@ class TopHeader extends Component {
         {this.state.signIn ?
       <MDBRow>
         <MDBCol md="12">
-            <div className="grey-text">
+            <div className="grey-text signInForm">
+            {this.props.signInApiError ? <div className="text-center signInErrMsg">{this.props.signInApiError}</div> : null}
               <MDBInput
                 label="Mobile number"
                 icon="phone"
@@ -258,7 +276,8 @@ class TopHeader extends Component {
       </MDBRow> :
       <MDBRow>
       <MDBCol md="12">
-          <div className="grey-text">
+          <div className="grey-text signInForm">
+          {this.props.signUpApiError ? <div className="text-center signInErrMsg">{this.props.signUpApiError}</div> : null}
             <MDBInput
               label="Your name"
               icon="user"
@@ -343,15 +362,27 @@ class TopHeader extends Component {
       </MDBModalFooter>
       </form>
     </MDBModal>
+    <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_CENTER} lightBackground/>
     </div>
         )
     }
 }
 
+function mapState(state) {
+  const {authentication, registration } = state;
+  const {signUperror} = registration;
+  const { loggedIn, user,loginerror } = authentication;
+  const signUpApiError = signUperror;
+  const signInApiError = loginerror;
+  return { user, loggedIn, signInApiError, signUpApiError};
+}
+
 const actionCreators = {
   login: userActions.login,
   logout: userActions.logout,
-  register: userActions.register
+  register: userActions.register,
+  clearSignInErrors: userActions.clearSignInErrors,
+  clearSignUpErrors: userActions.clearSignUpErrors
 };
 
 
@@ -359,5 +390,5 @@ const actionCreators = {
 
 export default compose(
   withRouter,
-  connect(null, actionCreators)
+  connect(mapState, actionCreators)
 )(TopHeader);

@@ -51,9 +51,9 @@ class HomePage extends Component {
         return (
             <div className="col-12">
                 <div className="row col-12 inputBox">
-                    <div className="col-4 locationInput">
+                    {/* <div className="col-4 locationInput">
                         <MDBInput label="Enter Your Location" outline size="sm" icon="map-marker-alt" />
-                    </div>
+                    </div> */}
                     <div className="col-4 searchInput ml-auto">
                         <MDBInput label="Search Doctors" outline size="sm" icon="search" />
                     </div>

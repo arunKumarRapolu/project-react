@@ -7,7 +7,9 @@ export function registration(state = {}, action) {
     case constants.REGISTER_SUCCESS:
       return {};
     case constants.REGISTER_FAILURE:
-      return {};
+      return {signUperror : action.error};
+    case constants.CLEAR_SIGNUP_ERRORS:
+      return {signUperror : null};
     default:
       return state
   }

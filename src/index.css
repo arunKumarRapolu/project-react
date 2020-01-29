@@ -90,10 +90,24 @@ width: 100%;
 }
 .md-form {
   margin-bottom: 0 !important;
+  margin-top: 1rem !important;
 }
 .invalidMsg {
   color: red;
   margin-left: 5%;
+}
+.mr-10{
+  margin-right:10px
+}
+.signInErrMsg{
+  color: red;
+  align-content: center;
+}
+.signInForm .md-form{
+  margin-top: 1em !important;
+}
+.mainHeader{
+  height:70px;
 }
 
 
