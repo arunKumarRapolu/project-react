@@ -109,5 +109,37 @@ width: 100%;
 .mainHeader{
   height:70px;
 }
+.noPad{
+  padding: 0 !important;
+}
+.ourDoctors{
+  font-weight: 400;
+  font-size: 1.5em;
+  margin-top: 0.5em;
+}
+.imageRadius{
+  border-radius: 50%;
+}
+.docDetaildiv, .docappdiv{
+  margin-top: 2%;
+}
+.doctorName {
+  color : #2bbbad
+}
+.doctorTag{
+  color: #777777;
+  font-size: 80%;
+}
+.doctorExperience {
+  color: #444444;
+}
+.doctorHospital{
+  color: #444444;
+  font-size: 90%;
+}
+.doctorCard{
+  width: "100%";
+  margin-top: 1%;
+}
 
 

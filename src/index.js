@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './helpers/store';
 import Main from "./components/Main";
 import HomePage from "./components/HomePage";
+import DoctorsMain from "./components/DoctorsMain";
 
 class App extends React.Component {
     render(){
@@ -17,6 +18,7 @@ class App extends React.Component {
                 <Switch>
                     <Main>
                         <Route exact path="/" component={HomePage} /> 
+                        <Route exact path="/doctors" component={DoctorsMain} /> 
                     </Main>
                 </Switch>
             </BrowserRouter>
