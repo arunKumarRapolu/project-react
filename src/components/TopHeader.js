@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
 
 import { userActions } from '../actions/userActions';
-import { thisTypeAnnotation } from "@babel/types";
 
 class TopHeader extends Component {
     constructor(props){
@@ -173,6 +172,7 @@ class TopHeader extends Component {
         return (
           <div>
             <MDBNavbar color="default-color" dark expand="md" className="mainHeader">
+            <div className="container">
         <MDBNavbarBrand>
         <MDBNavLink to="/">
           <strong className="white-text">Navbar</strong>
@@ -180,6 +180,7 @@ class TopHeader extends Component {
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
         <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+
           <MDBNavbarNav left>
             <MDBNavItem className="pl-15" active={/^[/]doctors/.test(this.props.location.pathname)}>
               <MDBNavLink to="/doctors">
@@ -201,6 +202,16 @@ class TopHeader extends Component {
                 </div>
               </MDBNavLink>
             </MDBNavItem>
+            <MDBNavItem className="pl-15" active={/^[/]finddoctor/.test(this.props.location.pathname)}>
+              <MDBNavLink to="/finddoctor">
+                <div className="ft-sz-14 bold">
+                Select your Problem
+                </div>
+                <div className="ft-sz-12">
+                Find your best doctor
+                </div>
+              </MDBNavLink>
+            </MDBNavItem>
           </MDBNavbarNav>
           <MDBNavbarNav right>
           {!this.props.loggedIn?
@@ -215,7 +226,7 @@ class TopHeader extends Component {
               <MDBIcon icon="user" className="mr-10" />
               <span>{this.props.user.user.name}</span>
             </MDBDropdownToggle>
-            <MDBDropdownMenu >
+            <MDBDropdownMenu className="headerDropdown">
               <MDBDropdownItem className="dropdownItem" href="#!">My Profile</MDBDropdownItem>
               <MDBDropdownItem href="#!">My Orders</MDBDropdownItem>
               <MDBDropdownItem href="#!">Settings</MDBDropdownItem>
@@ -224,9 +235,10 @@ class TopHeader extends Component {
           </MDBDropdown>
         </MDBNavItem>
           }
-            
           </MDBNavbarNav>
+         
         </MDBCollapse>
+        </div>
       </MDBNavbar>
       <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
       <form>

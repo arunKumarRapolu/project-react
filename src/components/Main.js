@@ -10,11 +10,12 @@ class Main extends Component {
     render() {
         return (
             <div>
-                <MDBContainer className="container">
                 <TopHeader />
+                <MDBContainer className="container">
                 {this.props.children}
-                <BottomFooter />
+                
                 </MDBContainer>
+                <BottomFooter className="bottomFooter "/>
             </div>
         )
     }

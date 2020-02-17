@@ -8,7 +8,8 @@ export const userActions = {
     register,
     clearSignInErrors,
     clearSignUpErrors,
-    logout
+    logout,
+    appointmentDoctorId
 };
 
 function login(username, password,toggle) {
@@ -71,4 +72,8 @@ function clearSignUpErrors(){
 }
 function logout(){
     return { type: constants.LOGOUT} 
+}
+function appointmentDoctorId(id){
+    //history.push('/doctors/appointment');
+    return { type: constants.APPOINTMENT_DOCTOR_ID,id};
 }

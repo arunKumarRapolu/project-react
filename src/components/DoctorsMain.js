@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { MDBInput, MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer} from "mdbreact";
-import defaultUserImg from "../images/dafault_user_img.png";
+import DoctorComponent from "./DoctorComponent";
 
 class DoctorsMain extends Component {
     constructor(props){
@@ -14,7 +14,8 @@ class DoctorsMain extends Component {
                 experience : "15",
                 hospitalName : "Citizens Hospital",
                 hospitalAddress : "Nallagandla, Hyderabad",
-                consultFee : "700"
+                consultFee : "700",
+                doctorId:1
             },
             {
                 doctorName : "Satish",
@@ -22,28 +23,13 @@ class DoctorsMain extends Component {
                 experience : "10",
                 hospitalName : "Medicover Hospitals",
                 hospitalAddress : "Madhapur, Hyderabad",
-                consultFee : "600"
+                consultFee : "600",
+                doctorId:2
             }
         ]
         const renderDoctors = doctorsList.map((val,key) => {
                 return(
-                    <MDBCard className="doctorCard">
-                        <div className="col-12 row">
-                            <div className="col-3 text-center">
-                                <img src={defaultUserImg} className="imageRadius" alt="Avatar" width="50%"/>
-                            </div>
-                            <div className="col-6 docDetaildiv">
-                                <div className="doctorName bold">Dr. {val.doctorName}</div>
-                                <div className="doctorTag">{val.specialist}</div>
-                                <div className="doctorExperience">{val.experience} Years of experience overall</div>
-                                <div className="doctorHospital">{val.hospitalName}, {val.hospitalAddress}</div>
-                            </div>
-                            <div className="col-3 docappdiv">
-                                Consultation Fee - 700 Rupees <br/>
-                                <MDBBtn className="loginButton">Book Appointment</MDBBtn>
-                            </div>
-                        </div>
-                    </MDBCard>
+                    <DoctorComponent key={key} data={val}/>
                 )
         });
         
