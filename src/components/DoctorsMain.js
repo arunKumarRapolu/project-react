@@ -35,7 +35,7 @@ class DoctorsMain extends Component {
         
 
         return(
-            <div>
+            <div className="container">
             <div className="row col-12 inputBox">
                 <div className="col-4 locationInput">
                     <div className="col-12 noPad ourDoctors">Our Doctors</div>

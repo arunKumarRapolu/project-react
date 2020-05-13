@@ -1,53 +1,53 @@
 .ft-sz-14{
-    font-size: 14px;
+  font-size: 14px;
 }
 .bold{
-    font-weight: bold ;
+  font-weight: bold ;
 }
 .ft-sz-12 {
-    font-size: 12px;
+  font-size: 12px;
 }
 .loginButton {
-    color: white;
-    border: 1px solid #ddd;
-    padding: 4px 10px 3px 10px;
+  color: white;
+  border: 1px solid #ddd;
+  padding: 4px 10px 3px 10px;
 }
 .navbar {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 .pl-15 {
-    padding-left: 15px;
+  padding-left: 15px;
 }
 .md-form .prefix.active {
-    color: #2bbbad !important
+  color: #2bbbad !important
 }
 .md-form.md-outline input[type="text"]:focus:not([readonly]) + label {
-    color: #2bbbad !important;
+  color: #2bbbad !important;
 }
 .md-form.md-outline input[type="text"]:focus:not([readonly]) {
-    border-color:  #2bbbad !important;
-    box-shadow: inset 0 0 0 1px #2bbbad !important;
+  border-color:  #2bbbad !important;
+  box-shadow: inset 0 0 0 1px #2bbbad !important;
 }
 /* .container {
-    max-width: 80% !important;
+  max-width: 80% !important;
 } */
 .searchInput {
-    float: right;
+  float: right;
 }
 .dealsContainer {
-    margin-top:15px;
+  margin-top:15px;
 }
 .dealscaurosal {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 .dealsImageView {
-  width:250px;
+width:250px;
 }
 .dealsImageText {
-  font-weight: bold;
-  font-size: 14px;
-  color: #444444;
+font-weight: bold;
+font-size: 14px;
+color: #444444;
 }
 .slick-slide {
 margin: 0px 10px;
@@ -58,120 +58,218 @@ width: 100%;
 }
 
 .slick-disabled {
-  opacity: 0.2;
+opacity: 0.2;
 }
 .slick-prev, .slick-next{
-  top:47%;
+top:47%;
 }
 .slick-next, .slick-prev {
-  right: -10px;
+right: -10px;
 }
 .mbfoot{
-  background-color: #2bbbad !important
+background-color: #2bbbad !important
 }
 .mt-7 {
-  margin-top: 7%;
+margin-top: 7%;
 }
 .dropdown-menu {
-  right: 0;
-  left: auto !important;
-  top:20% !important;
+right: 0;
+left: auto !important;
+top:20% !important;
 }
 .dropdown-item:focus, .dropdown-item:hover{
-  color: #2bbbad !important
+color: #2bbbad !important
 }
 .dropdown .dropdown-menu .dropdown-item:active{
-  background-color: #2bbbad !important
+background-color: #2bbbad !important
 }
 .show {
-  display: block;
+display: block;
 }
 .hide {
-  display: none;
+display: none;
 }
 .md-form {
-  margin-bottom: 0 !important;
-  margin-top: 1rem !important;
+margin-bottom: 0 !important;
+margin-top: 1rem !important;
 }
 .invalidMsg {
-  color: red;
-  margin-left: 5%;
+color: red;
+margin-left: 5%;
 }
 .mr-10{
-  margin-right:10px
+margin-right:10px
 }
 .signInErrMsg{
-  color: red;
-  align-content: center;
+color: red;
+align-content: center;
 }
 .signInForm .md-form{
-  margin-top: 1em !important;
+margin-top: 1em !important;
 }
-/* .mainHeader{
-  height:70px;
-} */
 .noPad{
-  padding: 0 !important;
+padding: 0 !important;
 }
 .ourDoctors{
-  font-weight: 400;
-  font-size: 1.5em;
-  margin-top: 0.5em;
+font-weight: 400;
+font-size: 1.5em;
+margin-top: 0.5em;
 }
 .imageRadius{
-  border-radius: 50%;
+border-radius: 50%;
 }
 .docDetaildiv, .docappdiv{
-  margin-top: 2%;
+margin-top: 2%;
 }
 .doctorName {
-  color : #2bbbad
+color : #2bbbad
 }
 .doctorTag{
-  color: #777777;
-  font-size: 80%;
+color: #777777;
+font-size: 80%;
 }
 .doctorExperience {
-  color: #444444;
+color: #444444;
 }
 .doctorHospital{
-  color: #444444;
-  font-size: 90%;
+color: #444444;
+font-size: 90%;
 }
 .doctorCard{
-  width: "100%";
-  margin-top: 1%;
+width: "100%";
+margin-top: 1%;
 }
 .findDoctorDropdown{
-  width:30%;
-  margin-top: 1%;
+width:30%;
+margin-top: 1%;
 }
 .selectDropdownMessage{
-  background-color: #ddd;
-  width:100%;
-  height:120px;
-  margin-top: 3%;
-  vertical-align:middle;
-  padding-top:2%;
-}
-.bottomFooter{
-  bottom: 0 !important;
+background-color: #ddd;
+width:100%;
+height:120px;
+margin-top: 3%;
+vertical-align:middle;
+padding-top:2%;
 }
 .dateDropdown{
-  width: 50%;
+width: 50%;
 }
 .form-check-input{
-  margin-top: 5%;
+margin-top: 5%;
 }
 .slotRadio{
-  width: 5%;
+width: 5%;
 }
 .slotRadioLabel{
-  margin-left: 2%;
+margin-left: 2%;
 }
 .bookApmntErr{
-  color: red;
+color: red;
 }
-
-
+.quantityEle{
+display: flex;
+}
+.quantityEle-child {
+flex: 1;
+border: 0;
+}
+.quantityChildButton{
+width: 40%;
+margin: 0 !important;
+padding: 0;
+height: 100%;
+border: 1px solid #6c757d;
+}
+.quantityInputDiv{
+width: 10%;
+}
+.quantityChildInput {
+width: 100%;
+font-size: 12px;
+}
+.pharmacyName{
+font-weight: 600;
+font-size: 15px;
+padding-left: 10%;
+}
+.pharmacyNameHead{
+margin-top: 1%;
+margin-bottom: 1%;
+}
+.pharmacyType{
+font-weight: 600;
+font-size: 10px;
+padding-left: 1%;
+}
+.pharmacySheetQuantity{
+font-size: 12px;
+padding-left: 10%;
+}
+.pharmacyRupeesHead{
+margin-top:2%
+}
+.pharmacyRupees{
+font-size: 14px;
+}
+.pharacyRupeesFoot{
+font-size: 10px;
+}
+.pharmacySelectQuantity{
+font-size: 12px;
+padding-left: 33%;
+}
+.footer{
+bottom: 0 !important;
+position:fixed;
+width:100%
+}
+.pharmacyList{
+margin-left: 5px;
+margin-right: 5px;
+margin-bottom: 10%;
+}
+.profile_label{
+  margin-top: 1rem;
+}
+.profile_pi{
+  margin-top: 1%;
+}
+.profile_img{
+  margin-top: 15%;
+  float: right;
+}
+.profile_head{
+  margin-top: 1%;
+  font-size: 14px;
+  font-weight: bold;
+}
+.profile_head_address{
+  margin-top: 1.5%;
+  font-size: 14px;
+  font-weight: bold;
+}
+.profile_addressCard{
+  margin:5%
+}
+.address_div{
+  margin:5% 0 2% 10%;
+}
+.adress_button{
+  margin: 0 !important;
+  width: 50%;
+  color: #2bbbad;
+  float: right;
+}
+.adress_button_first{
+  margin: 0 !important;
+  width: 49%;
+  color: #2bbbad;
+}
+.profile_footerButtons{
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
+.btn{
+  text-transform: none;
+}
 

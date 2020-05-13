@@ -123,7 +123,7 @@ class FindDoctor extends Component {
             )
         });
         return(
-            <div>
+            <div className="container">
             <div className="row">
                 <div className="col-md-12 noPad ourDoctors">Find your Doctor</div>
             </div>

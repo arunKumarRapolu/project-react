@@ -93,7 +93,7 @@ class BookAppointment extends Component {
             )
         });
         return(
-            <div>
+            <div className="container">
             <div className="row">
                 <div className="col-md-12 noPad ourDoctors">Book Appointment</div>
             </div>

@@ -11,11 +11,8 @@ class Main extends Component {
         return (
             <div>
                 <TopHeader />
-                <MDBContainer className="container">
                 {this.props.children}
-                
-                </MDBContainer>
-                <BottomFooter className="bottomFooter "/>
+                {/* <BottomFooter className="bottomFooter "/> */}
             </div>
         )
     }

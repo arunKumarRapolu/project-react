@@ -9,7 +9,8 @@ export const userActions = {
     clearSignInErrors,
     clearSignUpErrors,
     logout,
-    appointmentDoctorId
+    appointmentDoctorId,
+    saveSelectedList
 };
 
 function login(username, password,toggle) {
@@ -76,4 +77,8 @@ function logout(){
 function appointmentDoctorId(id){
     //history.push('/doctors/appointment');
     return { type: constants.APPOINTMENT_DOCTOR_ID,id};
+}
+
+function saveSelectedList(list){
+    return { type: constants.SAVE_PHARMACY_SELECTED_LIST, list};
 }

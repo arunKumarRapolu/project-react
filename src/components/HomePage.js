@@ -49,6 +49,7 @@ class HomePage extends Component {
   }
     render() {
         return (
+          <div className="container">
             <div className="col-12">
                 <div className="row col-12 inputBox">
                     {/* <div className="col-4 locationInput">
@@ -246,6 +247,7 @@ class HomePage extends Component {
                     </div>
                 </div>
             </div>
+          </div>
         )
     }
 }
