@@ -125,7 +125,7 @@ class MyProfile extends Component {
                         <MDBBtn>Back</MDBBtn>
                         <MDBBtn>Save</MDBBtn>
                         </div>
-                   </div>
+                </div>
             </div>
         )
     }

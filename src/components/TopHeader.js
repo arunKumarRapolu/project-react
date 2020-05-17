@@ -228,8 +228,7 @@ class TopHeader extends Component {
             </MDBDropdownToggle>
             <MDBDropdownMenu className="headerDropdown">
               <MDBDropdownItem className="dropdownItem" href="/myprofile">My Profile</MDBDropdownItem>
-              <MDBDropdownItem href="#!">My Orders</MDBDropdownItem>
-              <MDBDropdownItem href="#!">Settings</MDBDropdownItem>
+              <MDBDropdownItem href="/myorders">My Orders</MDBDropdownItem>
               <MDBDropdownItem onClick={this.signOut} href="#">Sign Out</MDBDropdownItem>
             </MDBDropdownMenu>
           </MDBDropdown>

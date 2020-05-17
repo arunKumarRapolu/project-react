@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { MDBInput, MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow} from "mdbreact";
 import doc_app from "../images/doc_app.jpg";
 import $ from "jquery";
+import 'slick-carousel';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import next_arrow from "../images/next_arrow.png";
 import prev_arrow from "../images/previous_arrow.png";
 
@@ -11,7 +14,7 @@ class HomePage extends Component {
     this.slickdiv = React.createRef();
   }
   componentDidMount(){
-    window.$('.dealsMaindiv').slick({
+    $('.dealsMaindiv').slick({
       infinite: false,
       speed: 300,
       slidesToShow: 4,

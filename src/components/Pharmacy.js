@@ -181,8 +181,14 @@ class Pharmacy extends Component{
             <div className="pharmacyList">
             {renderPharmacy}
             </div>
+            <div className="row">
+                    <div className="col-md-12 text-right profile_footerButtons">
+                    <MDBBtn disabled={!this.state.atLeastOneSelected} onClick={this.proccedClicked.bind(this)}>Proceed to Checkout</MDBBtn>
+                    </div>
+                </div>
             </div>
-            <BottomFooter buttons={buttons}/>
+            {/* <BottomFooter buttons={buttons}/> */}
+                
             </div>
         );
     }

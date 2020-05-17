@@ -15,6 +15,9 @@ import FindDoctor from "./components/FindDoctor";
 import BookAppointment from "./components/BookAppointment";
 import Pharmacy from "./components/Pharmacy";
 import MyProfile from "./components/MyProfile";
+import MyOrders from "./components/MyOrders";
+import Shopping from "./components/Shopping";
+import PaymentPass from "./components/PaymentPass";
 
 class App extends React.Component {
     render(){
@@ -28,6 +31,9 @@ class App extends React.Component {
                         <Route exact path="/doctors/appointment" render={(routeProps) => <BookAppointment {...routeProps}/>}/>
                         <Route exact path="/pharmacy" component={Pharmacy} />
                         <Route exact path="/myprofile" component={MyProfile} />
+                        <Route exact path="/myorders" component={MyOrders} />
+                        <Route exact path="/shopping" component={Shopping} />
+                        <Route exact path="/payment_complete" component={PaymentPass} />
                     </Main>
                 </Switch>
             </BrowserRouter>
