@@ -4,7 +4,8 @@ import { history } from '../helpers/history';
 import {ToastsStore} from 'react-toasts';
 
 export const paymentActions = {
-    payment
+    payment,
+    saveTransaction
 };
 
 function payment(data) {
@@ -28,4 +29,26 @@ function payment(data) {
     function request(user) { return { type: constants.PAYMENT_REQUEST, user } }
     // function success(user) { return { type: constants.LOGIN_SUCCESS, user } }
     // function failure(error) { return { type: constants.LOGIN_FAILURE, error } }
+}
+
+function saveTransaction(data) {
+    return dispatch => {
+        dispatch(startLoader());
+        return paymentService.saveTransaction(data)
+            .then(
+                user => {
+                    dispatch(success(user));
+                    dispatch(stopLoader());
+                    return 'success';
+                },
+                error => {
+                    dispatch(stopLoader());
+                    return 'fail';
+                }
+            );
+    };
+
+    function startLoader() { return { type: constants.SHOW_LOADER } }
+    function success(user) { return { type: constants.LOGIN_SUCCESS, user } }
+    function stopLoader() { return {type: constants.HIDE_LOADER}}
 }

@@ -1,37 +1,25 @@
 import {apiUrl} from '../url/apiUrl';
 
-export const paymentService = {
-    payment,
-    saveTransaction
+export const uploadService = {
+    upload,
+    getPrescription
 };
 
-function payment(data) {
+function upload(file, rawfile, auth){
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({file,rawfile, auth})
     };
-
-    return fetch(`${apiUrl.url}/payment/request`, requestOptions).then(handleResponse)
-    .then(res =>{
-        console.log(res);
-        window.location.href = res;
-    })
-    .catch((err) => console.log(err));
+    return fetch(`${apiUrl.url}/prescription/upload`, requestOptions).then(handleResponse);
 }
 
-function saveTransaction(data){
+function getPrescription() {
     const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
     };
-
-    return fetch(`${apiUrl.url}/payment/saveTransaction`, requestOptions)
-    .then(handleResponse)
-    .then(res => {
-        return res;
-    });
+    return fetch(`${apiUrl.url}/prescription/download`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

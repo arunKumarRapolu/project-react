@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { MDBInput, MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow} from "mdbreact";
+import banner1 from "../images/banner1.jpg";
+import banner2 from "../images/banner2.jpg";
+import banner3 from "../images/banner3.jpg";
+import banner4 from "../images/banner4.jpg";
 import doc_app from "../images/doc_app.jpg";
 import $ from "jquery";
 import 'slick-carousel';
@@ -58,14 +62,11 @@ class HomePage extends Component {
                     {/* <div className="col-4 locationInput">
                         <MDBInput label="Enter Your Location" outline size="sm" icon="map-marker-alt" />
                     </div> */}
-                    <div className="col-4 searchInput ml-auto">
-                        <MDBInput label="Search Doctors" outline size="sm" icon="search" />
-                    </div>
                 </div>
                 <div className="caurosal">
                     <MDBCarousel
                     activeItem={1}
-                    length={3}
+                    length={4}
                     showControls={true}
                     showIndicators={true}
                     className="z-depth-1"
@@ -75,7 +76,7 @@ class HomePage extends Component {
                     <MDBView>
                     <img
                     className="d-block w-100"
-                    src={doc_app}
+                    src="https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg"
                     alt="First slide"
                     height="300"
                     />
@@ -90,7 +91,7 @@ class HomePage extends Component {
                     <MDBView>
                     <img
                     className="d-block w-100"
-                    src="https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg"
+                    src={banner2}
                     alt="Second slide"
                     height="300"
                     />
@@ -105,7 +106,7 @@ class HomePage extends Component {
                     <MDBView>
                     <img
                     className="d-block w-100"
-                    src="https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg"
+                    src={banner3}
                     alt="Third slide"
                     height="300"
                     />
@@ -114,6 +115,21 @@ class HomePage extends Component {
                     <MDBCarouselCaption>
                     <h3 className="h3-responsive">Slight Mast</h3>
                     <p>Third text</p>
+                    </MDBCarouselCaption>
+                    </MDBCarouselItem>
+                    <MDBCarouselItem itemId="4">
+                    <MDBView>
+                    <img
+                    className="d-block w-100"
+                    src={banner4}
+                    alt="last slide"
+                    height="300"
+                    />
+                    <MDBMask overlay="black-light" />
+                    </MDBView>
+                    <MDBCarouselCaption>
+                    <h3 className="h3-responsive">Some Text</h3>
+                    <p>Some para</p>
                     </MDBCarouselCaption>
                     </MDBCarouselItem>
                     </MDBCarouselInner>

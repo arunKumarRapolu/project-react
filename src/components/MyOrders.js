@@ -1,74 +1,41 @@
 import React,{ Component } from "react";
-import { MDBInput, MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer} from "mdbreact";
+import { MDBInput, MDBLink, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer} from "mdbreact";
 import OrdersList from "./OrdersList";
+import { connect } from "react-redux";
+import {withRouter} from "react-router-dom";
+import {compose} from "redux";
+import { userActions } from "../actions/userActions";
+
 
 class MyOrders extends Component {
     constructor(props){
         super(props);
         this.state = {
-            list:[
-                {
-                    date:"10/5/2020",
-                    orders:[
-                        {
-                            id:1,
-                            name:"Paracetomol",
-                            type:"Tablet",
-                            sheetQuantity:"10 Tablets per sheet",
-                            price:20,
-                            quantity:1
-        
-                        },
-                        {
-                            id:2,
-                            name:"Combiflame",
-                            type:"Tablet",
-                            sheetQuantity:"10 Tablets per sheet",
-                            price:30,
-                            quantity:2
-                        }
-                    ]
-                },
-                {
-                    date:"11/5/2020",
-                    orders:[
-                        {
-                            id:3,
-                            name:"Ascoril",
-                            type:"Syrup",
-                            sheetQuantity:"100 ml",
-                            price:80,
-                            quantity:1
-                        },
-                        {
-                            id:4,
-                            name:"Paracetomol",
-                            type:"Tablet",
-                            sheetQuantity:"10 Tablets per sheet",
-                            price:20,
-                            quantity:2
-        
-                        },
-                        {
-                            id:5,
-                            name:"Combiflame",
-                            type:"Tablet",
-                            sheetQuantity:"10 Tablets per sheet",
-                            price:30,
-                            quantity:3
-                        }
-                    ]
-                }
-            ]
+            isCall:false
         }
     }
+    
+    componentWillMount(){
+        if(!localStorage.getItem('auth')){
+            this.props.history.push('/');
+        }
+        else if(Object.keys(this.props.auth).length > 0 ){
+            this.props.getMyOrders(this.props.auth.id)
+        }   
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if(Object.keys(nextProps.auth).length > 0 && nextState.isCall === false){
+            this.setState({isCall:true},function(){
+                this.props.getMyOrders(nextProps.auth.id)
+            });
+        }
+        
+    }
     render(){
-        const renderMyorders = this.state.list.map((item,i) => {
+        const renderMyorders = this.props.myOders.map((item,i) => {
             return(
-                <div>
-                <div className="myOrderDate">{item.date}</div>
-                <OrdersList data={item.orders} key={i} />
-                </div>
+                <OrdersList data={item} key={i} />
             )
         })
         return(
@@ -77,12 +44,14 @@ class MyOrders extends Component {
                 <div className="col-4 locationInput">
                     <div className="col-12 noPad ourDoctors">My Orders</div>
                 </div> 
-                <div className="col-4 searchInput ml-auto">
-                    <MDBInput label="Search Pharmacy" outline size="sm" icon="search" />
-                </div>
             </div>
             <div className="pharmacyList">
-            {renderMyorders}
+            {this.props.myOders.length > 0 ? renderMyorders :
+                <div className="emptyCartDiv">
+                <span className="emptyaCartSpan">No Orders Found</span><br/>
+                <MDBLink to="/pharmacy" className="emptyCartLink">Go to Pharmacy</MDBLink>
+                </div>
+            }
             </div>
                 <div className="row">
                         <div className="col-md-12 text-right ">
@@ -94,4 +63,21 @@ class MyOrders extends Component {
     }
 }
 
-export default MyOrders
+function mapState(state) {
+    const {registration,authentication } = state;
+    const regAuth = registration.auth;
+  const signinAuth = authentication.auth;
+  let auth = {};
+  if(Object.keys(regAuth).length > 0)
+  auth = regAuth;
+  else if(Object.keys(signinAuth).length > 0)
+  auth = signinAuth;
+  const myOders = authentication.myOders
+    return{auth, myOders};
+}
+
+const actionCreators = {
+    getMyOrders: userActions.getMyOrders
+};
+
+export default compose(withRouter,connect(mapState, actionCreators))(MyOrders);

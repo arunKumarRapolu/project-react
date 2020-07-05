@@ -1,38 +1,30 @@
 import React, { Component } from "react";
 import { MDBInput, MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBNavLink, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBRow, MDBContainer} from "mdbreact";
 import DoctorComponent from "./DoctorComponent";
+import { connect } from "react-redux";
+import {withRouter} from "react-router-dom";
+import {compose} from "redux";
+import { doctorActions } from '../actions/doctorActions';
 
 class DoctorsMain extends Component {
     constructor(props){
         super(props);
     }
+    componentWillMount(){
+        if(!localStorage.getItem('auth')){
+            this.props.history.push('/');
+        }
+    }
+
+    componentDidMount(){
+        this.props.getDoctors();
+    }
     render(){
-        var doctorsList = [
-            {
-                doctorName : "Venkateshwarlu",
-                specialist : "General Physician",
-                experience : "15",
-                hospitalName : "Citizens Hospital",
-                hospitalAddress : "Nallagandla, Hyderabad",
-                consultFee : "700",
-                doctorId:1
-            },
-            {
-                doctorName : "Satish",
-                specialist : "Orthopedicist",
-                experience : "10",
-                hospitalName : "Medicover Hospitals",
-                hospitalAddress : "Madhapur, Hyderabad",
-                consultFee : "600",
-                doctorId:2
-            }
-        ]
-        const renderDoctors = doctorsList.map((val,key) => {
+        const renderDoctors = this.props.doctorArr.map((val,key) => {
                 return(
                     <DoctorComponent key={key} data={val}/>
                 )
         });
-        
 
         return(
             <div className="container">
@@ -44,10 +36,28 @@ class DoctorsMain extends Component {
                     <MDBInput label="Search Doctors" outline size="sm" icon="search" />
                 </div>
             </div>
-            {renderDoctors}
+            {this.props.doctorArr.length > 0 ? renderDoctors : ''}
             </div>
         )
     }
 }
 
-export default DoctorsMain
+
+function mapState(state) {
+    const {registration,authentication, doctorRelated } = state;
+    const regAuth = registration.auth;
+  const signinAuth = authentication.auth;
+  let auth = {};
+  if(Object.keys(regAuth).length > 0)
+  auth = regAuth;
+  else if(Object.keys(signinAuth).length > 0)
+  auth = signinAuth;
+  const doctorArr = doctorRelated.doctorsList;
+    return{ auth, doctorArr};
+}
+
+const actionCreators = {
+    getDoctors: doctorActions.getDoctors
+  };
+
+export default compose(withRouter,connect(mapState, actionCreators))(DoctorsMain);

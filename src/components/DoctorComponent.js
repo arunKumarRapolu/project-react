@@ -12,10 +12,9 @@ class DoctorComponent extends Component {
         super(props);
         console.log(props);
     }
-    bookApmnt(id){
-        console.log(id);
+    bookApmnt(data){
         //history.push("/doctors/appointment");
-        this.props.appointmentDoctorId(id);
+        this.props.appointmentDoctor(data);
         this.props.history.push("/doctors/appointment");
     }
     render(){
@@ -23,17 +22,17 @@ class DoctorComponent extends Component {
             <MDBCard className="doctorCard">
                 <div className="row">
                     <div className="col-md-3 text-center">
-                        <img src={defaultUserImg} className="imageRadius" alt="Avatar" width="50%"/>
+                        <img src={this.props.data.img} className="imageRadius" alt="Avatar" width="50%"/>
                     </div>
                     <div className="col-md-6 docDetaildiv">
-                        <div className="doctorName bold">Dr. {this.props.data.doctorName}</div>
-                        <div className="doctorTag">{this.props.data.specialist}</div>
-                        <div className="doctorExperience">{this.props.data.experience} Years of experience overall</div>
-                        <div className="doctorHospital">{this.props.data.hospitalName}, {this.props.data.hospitalAddress}</div>
+                        <div className="doctorName bold">{this.props.data.name}</div>
+                        <div className="doctorTag">{this.props.data.designation}</div>
+                        <div className="doctorExperience">{this.props.data.experience} Years of experience</div>
+                        <div className="doctorHospital">{this.props.data.address}</div>
                     </div>
                     <div className="col-md-3 docappdiv">
-                        Consultation Fee - {this.props.data.consultFee} Rupees <br/>
-                        <MDBBtn className="loginButton" onClick={this.bookApmnt.bind(this,this.props.data.doctorId)}>Book Appointment</MDBBtn>
+                        Consultation Fee - {this.props.data.fee} Rupees <br/>
+                        <MDBBtn className="loginButton" onClick={this.bookApmnt.bind(this,this.props.data)}>Book Appointment</MDBBtn>
                     </div> 
                 </div>
             </MDBCard>
@@ -50,7 +49,7 @@ function mapState(state) {
   }
   
   const actionCreators = {
-    appointmentDoctorId : userActions.appointmentDoctorId,
+    appointmentDoctor : userActions.appointmentDoctor,
   };
 
   

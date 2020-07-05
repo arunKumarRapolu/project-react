@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { history } from '../helpers/history';
 import { MDBBtn,MDBInput,MDBModal,MDBModalHeader,MDBModalBody,MDBModalFooter} from "mdbreact";
 import defaultUserImg from "../images/dafault_user_img.png";
+import {ToastsContainer,ToastsStore, ToastsContainerPosition} from 'react-toasts';
+
 
 class BookAppointment extends Component {
     constructor(props){
@@ -26,22 +28,14 @@ class BookAppointment extends Component {
                 {id:7,time:"01:30 PM"},
                 {id:8,time:"02:30 PM"},
                 {id:8,time:"03:00 PM"}
-            ],
-            doctorDetails : {
-                "doctorName" : "Venkateshwarlu",
-                "specialist" : "General Physician",
-                "experience" : "15",
-                "hospitalName" : "Citizens Hospital",
-                "hospitalAddress" : "Nallagandla, Hyderabad",
-                "consultFee" : "700",
-                "prId": 7,
-                "doctorId":1 
-            }
+            ]
         }
     }
     componentDidMount(){
-       // if(!this.props.appointmentDoctorId)
-        //history.goBack();
+        if(Object.keys(this.props.auth).length == 0){
+            ToastsStore.error("Refresh not allowed here");
+            this.props.history.push('/')
+        }
     }
     toggle = nr => () => {
         let modalNumber = 'modal' + nr
@@ -99,13 +93,13 @@ class BookAppointment extends Component {
             </div>
             <div className="row">
                 <div className="col-md-3 text-center">
-                    <img src={defaultUserImg} className="imageRadius" alt="Avatar" width="50%" />
+                    <img src={this.props.appointmentDoctor.img} className="imageRadius" alt="Avatar" width="50%" />
                 </div>
                 <div className="col-md-6 docDetaildiv">
-                    <div className="doctorName bold">Dr. {this.state.doctorDetails.doctorName}</div>
-                    <div className="doctorTag">{this.state.doctorDetails.specialist}</div>
-                    <div className="doctorExperience">{this.state.doctorDetails.experience} Years of experience overall</div>
-                    <div className="doctorHospital">{this.state.doctorDetails.hospitalName}, {this.state.doctorDetails.hospitalAddress}</div>
+                    <div className="doctorName bold"> {this.props.appointmentDoctor.name}</div>
+                    <div className="doctorTag">{this.props.appointmentDoctor.designation}</div>
+                    <div className="doctorExperience">{this.props.appointmentDoctor.experience} Years of experience</div>
+                    <div className="doctorHospital">{this.props.appointmentDoctor.address}</div>
                 </div>
             </div>
             <div className="row">
@@ -116,7 +110,7 @@ class BookAppointment extends Component {
                     </select>
                 </div>
                 <div className="col-md-6 text-right">
-                    Consultation Fee - {this.state.doctorDetails.consultFee} Rupees
+                    Consultation Fee - {this.props.appointmentDoctor.fee} Rupees
                 </div>
             </div>
             {this.state.isselectedDate ? 
@@ -141,7 +135,7 @@ class BookAppointment extends Component {
                     <p>
                         Thank You for booking with Company Name
                     </p>
-                    <p>Your Booking with Dr.{this.state.doctorDetails.doctorName} is confirmed on <br/>
+                    <p>Your Booking with {this.props.appointmentDoctor.name} is confirmed on <br/>
                     {this.state.selectedDate} at {this.state.radioSelectedVal}</p>
                 </MDBModalBody>
                 <MDBModalFooter>
@@ -154,9 +148,17 @@ class BookAppointment extends Component {
 }
 function mapState(state) {
     const {bookingRelated } = state;
-    const {appointmentDoctorId} = bookingRelated;
+    const {appointmentDoctor} = bookingRelated;
+    const {registration,authentication } = state;
+    const regAuth = registration.auth;
+  const signinAuth = authentication.auth;
+  let auth = {};
+  if(Object.keys(regAuth).length > 0)
+  auth = regAuth;
+  else if(Object.keys(signinAuth).length > 0)
+  auth = signinAuth;
    
-    return {appointmentDoctorId};
+    return {appointmentDoctor, auth};
   }
   
  

@@ -6,6 +6,7 @@ import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 import { connect } from 'react-redux';
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
+import logo from "../images/logo.jpg"
 
 import { userActions } from '../actions/userActions';
 
@@ -34,6 +35,7 @@ class TopHeader extends Component {
           };
           this.handleSubmit = this.handleSubmit.bind(this);
           this.gotoSignUp = this.gotoSignUp.bind(this);
+          this.toggle = this.toggle.bind(this);
     }
     
       
@@ -41,7 +43,9 @@ class TopHeader extends Component {
         this.setState({ isOpen: !this.state.isOpen });
       }
       toggle = nr => () => {
-        let modalNumber = 'modal' + nr
+        let modalNumber = 'modal' + nr;
+        this.props.clearSignInErrors();
+        this.props.clearSignUpErrors();
         this.setState({
           [modalNumber]: !this.state[modalNumber],
           signIn:true,
@@ -97,7 +101,7 @@ class TopHeader extends Component {
           reg_cnf_pwd:null,
           reg_cnf_pwd_valid:true,
           signIn:true
-        })
+        });
       }
       async handleSubmit(e) {
        e.preventDefault();
@@ -116,7 +120,9 @@ class TopHeader extends Component {
         
         if(proceed){
         const res = await this.props.login(phoneNum, this.state.login_password,this.toggle);
-        console.log(res);
+          if(res == 'success'){
+            this.props.history.push(this.props.linkAfterLogin);
+          }
         }
       }
       else{
@@ -151,7 +157,10 @@ class TopHeader extends Component {
             email : this.state.reg_email,
             password : this.state.reg_pwd
           }
-          this.props.register(newUser,this.toggle);
+          const res = await this.props.register(newUser,this.toggle);
+          if(res == 'success'){
+            this.props.history.push(this.props.linkAfterLogin);
+          }
         }
       }
     }
@@ -165,8 +174,37 @@ class TopHeader extends Component {
       this.props.clearSignUpErrors()
     };
     signOut = () => {
-      window.localStorage.removeItem('user');
+      window.localStorage.removeItem('auth');
       this.props.logout();
+      this.props.history.push('/');
+    }
+    doctorsLink = () => {
+      if(Object.keys(this.props.auth).length > 0){
+        return '/doctors';
+      }
+      else{
+        return '/';
+      }
+    }
+    doctorsLinkClicked =() =>{
+      if(Object.keys(this.props.auth).length <= 0){
+        this.props.saveLinkAfterLogin('/doctors');
+        this.toggle(14)();
+      }
+    }
+    pharmacyLink = () => {
+      if(Object.keys(this.props.auth).length > 0){
+        return '/pharmacy';
+      }
+      else{
+        return '/';
+      }
+    }
+    pharmacyLinkClicked =() =>{
+      if(Object.keys(this.props.auth).length <= 0){
+        this.props.saveLinkAfterLogin('/pharmacy');
+        this.toggle(14)();
+      }
     }
     render() {
         return (
@@ -183,7 +221,7 @@ class TopHeader extends Component {
 
           <MDBNavbarNav left>
             <MDBNavItem className="pl-15" active={/^[/]doctors/.test(this.props.location.pathname)}>
-              <MDBNavLink to="/doctors">
+              <MDBNavLink to={this.doctorsLink()} onClick={this.doctorsLinkClicked.bind(this)}>
                 <div className="ft-sz-14 bold">
                 Doctors
                 </div>
@@ -193,7 +231,7 @@ class TopHeader extends Component {
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem className="pl-15" active={/^[/]pharmacy/.test(this.props.location.pathname)}>
-              <MDBNavLink to="/pharmacy">
+              <MDBNavLink to={this.pharmacyLink()} onClick={this.pharmacyLinkClicked.bind(this)}>
                 <div className="ft-sz-14 bold">
                 Pharmacy
                 </div>
@@ -202,44 +240,55 @@ class TopHeader extends Component {
                 </div>
               </MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem className="pl-15" active={/^[/]finddoctor/.test(this.props.location.pathname)}>
-              <MDBNavLink to="/finddoctor">
+            <MDBNavItem className="pl-15" active={/^[/]contactUs/.test(this.props.location.pathname)}>
+              <MDBNavLink to="/contactUs">
                 <div className="ft-sz-14 bold">
-                Select your Problem
+                  Contact Us
                 </div>
                 <div className="ft-sz-12">
-                Find your best doctor
+                Get in touch with Us
                 </div>
               </MDBNavLink>
             </MDBNavItem>
           </MDBNavbarNav>
-          <MDBNavbarNav right>
-          {!this.props.loggedIn?
+         
+          {Object.keys(this.props.auth).length == 0 ?
+           <MDBNavbarNav right>
             <MDBNavItem>
               <MDBNavLink className="waves-effect waves-light" to="#">
                 <MDBBtn className="loginButton" onClick={this.toggle(14)} >Login / SignUp</MDBBtn>
               </MDBNavLink>
-            </MDBNavItem>:
+            </MDBNavItem>
+            </MDBNavbarNav>:
+            <MDBNavbarNav right>
+          <MDBNavItem>
+          <MDBNavLink to="/cart">
+          <MDBIcon icon="shopping-cart" className="mr-5" />
+          <div className="cartCount">{this.props.cartLength}</div>
+            <span>Cart</span>
+            </MDBNavLink>
+          </MDBNavItem>
           <MDBNavItem >
           <MDBDropdown>
             <MDBDropdownToggle nav caret>
-              <MDBIcon icon="user" className="mr-10" />
-              <span>{this.props.user.user.name}</span>
+              <MDBIcon icon="user" className="mr-5" />
+              <span>{this.props.auth.name}</span>
             </MDBDropdownToggle>
             <MDBDropdownMenu className="headerDropdown">
-              <MDBDropdownItem className="dropdownItem" href="/myprofile">My Profile</MDBDropdownItem>
-              <MDBDropdownItem href="/myorders">My Orders</MDBDropdownItem>
-              <MDBDropdownItem onClick={this.signOut} href="#">Sign Out</MDBDropdownItem>
+            <MDBNavLink to="/myprofile" className="dropdownItemLink"><MDBDropdownItem className="dropdownItem">My Profile</MDBDropdownItem></MDBNavLink>
+            <MDBNavLink to="/myorders" className="dropdownItemLink"><MDBDropdownItem className="dropdownItem">My Orders</MDBDropdownItem></MDBNavLink>
+            <MDBNavLink to="/admin/home" className="dropdownItemLink"><MDBDropdownItem className="dropdownItem">Admin Page</MDBDropdownItem></MDBNavLink>
+            <MDBNavLink to="/" className="dropdownItemLink"><MDBDropdownItem className="dropdownItem" onClick={this.signOut}>Sign Out</MDBDropdownItem></MDBNavLink>
             </MDBDropdownMenu>
           </MDBDropdown>
         </MDBNavItem>
+        </MDBNavbarNav>
           }
-          </MDBNavbarNav>
          
         </MDBCollapse>
         </div>
       </MDBNavbar>
-      <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+      <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered modalClassName="topHeaderModal">
       <form>
       <MDBModalHeader toggle={this.toggle(14)}>{this.state.signIn ? "Sign In" : "Sign Up"}</MDBModalHeader>
       <MDBModalBody>
@@ -362,7 +411,7 @@ class TopHeader extends Component {
                 Passwords mismatching
             </div>
           </div>
-          <div>Already Registered ? <a href="#" onClick={this.gotoSignIn}>Sign In</a></div>
+          <div>Already Registered ? <a href="#" onClick={this.gotoSignIn.bind(this)}>Sign In</a></div>
       </MDBCol>
     </MDBRow>
       }
@@ -379,13 +428,27 @@ class TopHeader extends Component {
     }
 }
 
+
 function mapState(state) {
   const {authentication, registration } = state;
   const {signUperror} = registration;
-  const { loggedIn, user,loginerror } = authentication;
+  const {loginerror } = authentication;
   const signUpApiError = signUperror;
   const signInApiError = loginerror;
-  return { user, loggedIn, signInApiError, signUpApiError};
+  const regAuth = registration.auth;
+  const signinAuth = authentication.auth;
+  let auth = {};
+  let cartLength = 0;
+  if(Object.keys(regAuth).length > 0){
+    auth = regAuth;
+    cartLength = auth.cart.length
+  }
+  else if(Object.keys(signinAuth).length > 0){
+    auth = signinAuth;
+    cartLength = auth.cart.length
+  }
+  const linkAfterLogin = authentication.linkAfterLogin
+  return { auth, signInApiError, signUpApiError,cartLength, linkAfterLogin};
 }
 
 const actionCreators = {
@@ -393,7 +456,8 @@ const actionCreators = {
   logout: userActions.logout,
   register: userActions.register,
   clearSignInErrors: userActions.clearSignInErrors,
-  clearSignUpErrors: userActions.clearSignUpErrors
+  clearSignUpErrors: userActions.clearSignUpErrors,
+  saveLinkAfterLogin: userActions.saveLinkAfterLogin
 };
 
 

@@ -138,6 +138,7 @@ font-size: 90%;
 .doctorCard{
 width: "100%";
 margin-top: 1%;
+cursor: pointer;
 }
 .findDoctorDropdown{
 width:30%;
@@ -167,6 +168,7 @@ margin-left: 2%;
 color: red;
 }
 .quantityEle{
+margin-top: 28%;
 display: flex;
 }
 .quantityEle-child {
@@ -188,28 +190,27 @@ width: 100%;
 font-size: 12px;
 }
 .pharmacyName{
-font-weight: 600;
-font-size: 15px;
-padding-left: 10%;
+font-weight: bold;
+font-size: 17px;
 }
 .pharmacyNameHead{
-margin-top: 1%;
+margin-top: 2%;
 margin-bottom: 1%;
 }
 .pharmacyType{
-font-weight: 600;
-font-size: 10px;
+font-weight: 500;
+font-size: 13px;
 padding-left: 1%;
 }
 .pharmacySheetQuantity{
 font-size: 12px;
-padding-left: 10%;
 }
 .pharmacyRupeesHead{
 margin-top:2%
 }
 .pharmacyRupees{
-font-size: 14px;
+font-size: 16px;
+font-weight: bold;
 }
 .pharacyRupeesFoot{
 font-size: 10px;
@@ -263,7 +264,7 @@ margin-bottom: 3%;
 }
 .adress_button_first{
   margin: 0 !important;
-  width: 49%;
+  width: 49.5%;
   color: #2bbbad;
 }
 .profile_footerButtons{
@@ -333,4 +334,344 @@ margin-bottom: 3%;
 }
 .trans_link{
   color: #2bbbad;
+}
+.by{
+  font-size: 13px;
+  font-weight: 400;
+}
+.pharmacyCompanyName{
+  font-size: 14px;
+  font-weight: 500;
+}
+.priceText{
+  font-size:14px;
+  font-weight: 400;
+}
+.priceHeading{
+  margin-top: 4%;
+  padding-right: 10%;
+}
+.pharmacyItem{
+  cursor: pointer;
+}
+.productDetailProductName{
+  margin-top: 2%;
+  font-size: 20px;
+  font-weight: 500;
+  padding-left: 5%;
+}
+.productDetailitemHead{
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 500;
+}
+.productDetailItem{
+  font-size: 14px;
+  font-weight: normal;
+}
+.productDetailDesc{
+  margin-top:2%;
+  line-height: 2rem;
+}
+.mr-5{
+  margin-right: 5px !important;
+}
+.cartCount{
+  position: absolute;
+  left: 14px;
+  top: 1px;
+  text-align: center;
+  border-radius: 7px;
+  width: 15px;
+  height: 15px;
+  background-color: #ff6161;
+  border: 1px solid #fff;
+  font-weight: 400;
+  color: #f0f0f0;
+  line-height: 14px;
+  font-size: 10px;
+}
+.myCartCard{
+width: "100%";
+margin-top: 1%;
+}
+.mycartItemPrice{
+  margin-top: 10%;
+}
+.mycartItemRemove{
+  margin-top: 4%;
+}
+.shopping_card{
+  margin-top: 1%;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.shopping_card .row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.quantityError{
+  color: red;
+  font-size: 12px;
+  font-weight: 500;
+}
+.shopping_nos{
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8%;
+}
+.prescription_dropzone{
+  width: 100%;
+  margin-top: 2%;
+  border: 1px dashed #CCC;
+}
+.prescription_dropzone p {
+  text-align: center;
+  padding-top: 2%;
+  margin-bottom: 0 !important;
+  padding-bottom: 2%;
+}
+.prescription_dropzone_files{
+  font-weight: bold;
+  font-size: 14px;
+  padding-left: 5%;
+}
+.prescription_dropzone_filelist{
+  font-size: 13px;
+  font-weight: 400;
+}
+.prescription_desc{
+  font-size: 14px;
+  font-weight: 500;
+}
+.successMsg{
+  color: green;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2%;
+}
+.noProductsFound{
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 4%;
+  text-align: center;
+}
+.uploadFileErrMsg{
+  margin-top: 5%;
+  text-align: center;
+  color: red;
+  font-size: 14px;;
+}
+.errorMsg{
+  color: red;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2%;
+}
+.custom-select{
+  margin-top:4.5% !important;
+  font-size:12px !important;
+}
+.emptyCartDiv {
+  margin-top: 4%;
+  text-align: center;
+}
+.emptyaCartSpan {
+  font-weight: bold;
+  font-size: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.emptyCartLink {
+  font-size: 15px;
+  font-weight: 500;
+  color:#2bbbad
+}
+.adress_state{
+  border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    margin-left: 2%;
+    width: 92%;
+    border-bottom: 1px solid rgba(0,0,0,0.16);
+    color:  rgba(0,0,0,0.6);
+}
+.adressStateIcon{
+  margin-top: 3%;
+  font-size: 180%;
+}
+.selectAdress_error{
+  font-size: 13px;
+  font-weight: 500;
+  color: red;
+  padding-right: 5%;
+}
+.shopping_noAdressFound{
+  margin-top : 3%;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 3%;
+}
+.dropdown-item{
+  padding:9px 0px 9px 9px !important;
+}
+.dropdownItemLink{
+  padding:0 !important;
+}
+.myprofile_add_address{
+  padding: 1% 2%;
+  width:30%;
+  margin-top: 5%;
+}
+.myprofile_saveSymbl{
+  padding-right: 4%;
+}
+.profile_footerError{
+  margin-top:3%;
+  color: red;
+  font-size: 12px;
+  font-weight: 500;
+}
+.myOrderFirstRow{
+  background-color:  rgba(0,0,0,0.5);
+  color: #EEE;
+  padding:0.5% 2% 0.5% 2%;
+}
+.myOrderDateSpan{
+  font-size: 12px;
+  font-weight: 400;
+}
+.myOrderDateSpan1{
+  font-size: 14px;
+  font-weight: 600;
+}
+.myOrdersAddressHeading{
+  font-size: 12px;
+  font-weight: 400;
+}
+.myOrdersAddressValue{
+  font-size: 14px;
+  font-weight: 600;
+}
+.myOrderProductmarginTop{
+  margin-top: 3%;
+}
+.myOrdersCard{
+  width: "100%";
+  margin-top: 1%;
+}
+.contactUsContainer{
+  background-color: #EEE;
+}
+.contactUsCard{
+  margin-top:10%;
+  margin-bottom: 5%;
+}
+.contactUsHeading{
+  font-size:20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top:5%;
+  color:#2bbbad;
+}
+.contactUsInput{
+  margin: 0 5% 0 5%;
+}
+.contactUsTextArea{
+  width: 100%;
+  margin-top: 5%;
+  border-color: rgba(0,0,0,0.22);
+}
+.contactUsSubmit{
+  text-align: right;
+  margin-right:4%;
+  margin-top: 5%;
+  margin-bottom: 3%;
+}
+.contactUsTextMainDiv{
+  margin-top: 10%;
+  margin-bottom: 5%;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-style: italic;
+}
+.contactUsSubmitSuccess{
+  margin-top: 3%;
+  text-align: center;
+  color: green;
+}
+.contactUsSubmitFail{
+  margin-top: 3%;
+  text-align: center;
+  color: red;
+}
+.caurosal{
+  margin-top: 3%;
+}
+
+.adminHome ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.adminHome li {
+  float: left;
+}
+
+.adminHome li a, .adminHome .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.adminHome li a:hover, .adminHome .dropdowna:hover .dropbtn {
+  background-color: red;
+}
+
+.adminHome li.dropdowna {
+  display: inline-block;
+}
+
+.adminHome .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.adminHome .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.adminHome .dropdown-content a:hover {background-color: #f1f1f1;}
+
+.adminHome .dropdowna:hover .dropdown-content {
+  display: block;
+}
+
+.dropdowna .activate {
+  background-color: #4CAF50;
+}
+.adminHome{
+  margin-top: 1%;
+}
+.adminHome .Ripple-parent{
+  overflow: none !important;
+}
+.adminnoPadding{
+  padding: 0px !important;
 }

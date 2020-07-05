@@ -1,37 +1,50 @@
 import {apiUrl} from '../url/apiUrl';
 
-export const paymentService = {
-    payment,
-    saveTransaction
+export const productService = {
+    addProduct,
+    getProducts,
+    getProductDetails
 };
 
-function payment(data) {
+function addProduct(data) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
 
-    return fetch(`${apiUrl.url}/payment/request`, requestOptions).then(handleResponse)
-    .then(res =>{
-        console.log(res);
-        window.location.href = res;
+    return fetch(`${apiUrl.url}/product/addProduct`, requestOptions)
+    .then(handleResponse)
+    .then(msg => {
+        return msg;
     })
-    .catch((err) => console.log(err));
 }
 
-function saveTransaction(data){
+function getProducts() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${apiUrl.url}/product/getProducts`, requestOptions)
+    .then(handleResponse)
+    .then(msg => {
+        return msg;
+    })
+}
+
+function getProductDetails(id) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(id)
     };
 
-    return fetch(`${apiUrl.url}/payment/saveTransaction`, requestOptions)
+    return fetch(`${apiUrl.url}/product/getProductDetails`, requestOptions)
     .then(handleResponse)
-    .then(res => {
-        return res;
-    });
+    .then(msg => {
+        return msg;
+    })
 }
 
 function handleResponse(response) {

@@ -10,11 +10,15 @@ class PaymentPass extends Component {
         }
     }
     componentWillMount(){
-        console.log(this.props.location.search);
-        let fullstring = this.props.location.search;
-        let strArr = fullstring.split('=')
-        console.log(strArr[1]);
-        this.setState({trans_id:strArr[1]});
+        if(!localStorage.getItem('auth')){
+            this.props.history.push('/');
+        }
+        else{
+            let fullstring = this.props.location.search;
+            let strArr = fullstring.split('=')
+            console.log(strArr[1]);
+            this.setState({trans_id:strArr[1]});
+        }
     }
     render(){
         return(

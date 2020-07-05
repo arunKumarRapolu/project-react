@@ -1,37 +1,21 @@
 import {apiUrl} from '../url/apiUrl';
 
-export const paymentService = {
-    payment,
-    saveTransaction
+export const adminService = {
+    addDoctor
 };
 
-function payment(data) {
+function addDoctor(data) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     };
 
-    return fetch(`${apiUrl.url}/payment/request`, requestOptions).then(handleResponse)
-    .then(res =>{
-        console.log(res);
-        window.location.href = res;
-    })
-    .catch((err) => console.log(err));
-}
-
-function saveTransaction(data){
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    };
-
-    return fetch(`${apiUrl.url}/payment/saveTransaction`, requestOptions)
+    return fetch(`${apiUrl.url}/admin/addDoctor`, requestOptions)
     .then(handleResponse)
-    .then(res => {
-        return res;
-    });
+    .then(msg => {
+        return msg;
+    })
 }
 
 function handleResponse(response) {

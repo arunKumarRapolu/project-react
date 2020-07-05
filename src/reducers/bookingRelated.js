@@ -1,9 +1,16 @@
 import { constants } from '../constants/allConstants';
 
-export function bookingRelated(state = {}, action) {
+const initialState = {
+  appointmentDoctor:{}
+}
+
+export function bookingRelated(state = initialState, action) {
   switch (action.type) {
     case constants.APPOINTMENT_DOCTOR_ID:
-      return { appointmentDoctorId: action.id };
+      return { 
+        ...state,
+        appointmentDoctor: action.data
+      };
     default:
       return state
   }
