@@ -201,7 +201,7 @@ class HomePage extends Component {
                     </div>
                 </div>
                 <div className="dealsContainer">
-                    <div className="dealscaurosal">Doctors in Top Specialists</div>
+                    <div className="dealscaurosal">Doctors in Top Specialists --- Changing</div>
                     <div className="dealsMaindiv">
                       <div className="dealsImageView">
                         <MDBNavLink to="/">
