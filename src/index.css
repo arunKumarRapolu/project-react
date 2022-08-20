@@ -675,3 +675,50 @@ margin-top: 1%;
 .adminnoPadding{
   padding: 0px !important;
 }
+.navBrand{
+  width: 12%;
+}
+.navBrand a {
+  padding: 0 !important;
+}
+.css-df17o1{
+  z-index: 2000 !important;
+}
+.fgpdResendLink{
+  color: #5a95f5 !important;
+  margin-right: 5%;
+}
+.fgpdResendMsg{
+  float: right;
+  color: green;
+}
+.fgpdChangePwdSuccess{
+  color: green;
+  margin: 5%;
+}
+.fgpdChangePwdFail{
+  color: red;
+  margin: 5%;
+}
+.fgpdSignInLink{
+  color: #5a95f5 !important;
+  font-size: 16px;
+  font-weight: 550;
+}
+.justCard{
+  width: "100%";
+  margin-top: 1%;
+  }
+.adminTable{
+  border:1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+.adminTable tr th, .adminTable tr td{
+  border: 1px solid black;
+  padding: 1% 0 1% 0;
+}
+.linkColor{
+  color: #5a95f5 !important;
+}

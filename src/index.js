@@ -32,6 +32,8 @@ import AdminUsersList from "./components/admin/AdminUsersList";
 import AdminOrdersList from "./components/admin/AdminOrdersList";
 import AdminPrescriptionList from "./components/admin/AdminPrescriptionList";
 import AdminContactUsList from "./components/admin/AdminContactUsList";
+import AdminEditProduct from "./components/admin/AdminEditProduct";
+import AdminEditDoctor from "./components/admin/AdminEditDoctor";
 
 class App extends React.Component {
     render(){
@@ -63,6 +65,8 @@ class App extends React.Component {
                         <Route exact path='/admin/orders' component={AdminOrdersList}/>
                         <Route exact path='/admin/prescriptions' component={AdminPrescriptionList}/>
                         <Route exact path='/admin/contactUs' component={AdminContactUsList}/>
+                        <Route exact path="/admin/product/edit/:id" component={AdminEditProduct} />
+                        <Route exact path="/admin/doctor/edit/:id" component={AdminEditDoctor} />
                         {/* <Route exact path="*" component={NotFoundRedirect} /> */}
                     </Main>
                 </Switch>

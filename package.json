@@ -30,7 +30,8 @@
   },
   "devDependencies": {
     "renamer": "^1.0.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "semantic-release": "19.0.3"
   },
   "browserslist": [
     ">0.2%",

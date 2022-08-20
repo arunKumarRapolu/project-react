@@ -32,6 +32,9 @@ class MyOrders extends Component {
         }
         
     }
+    goBack(){
+        this.props.history.push('/');
+    }
     render(){
         const renderMyorders = this.props.myOders.map((item,i) => {
             return(
@@ -55,7 +58,7 @@ class MyOrders extends Component {
             </div>
                 <div className="row">
                         <div className="col-md-12 text-right ">
-                        <MDBBtn>Back</MDBBtn>
+                        <MDBBtn onClick={this.goBack.bind(this)}>Back</MDBBtn>
                         </div>
                 </div>
             </div>

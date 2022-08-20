@@ -24,7 +24,9 @@ export const userActions = {
     removeAddress,
     getMyOrders,
     saveLinkAfterLogin,
-    submitContactUs
+    submitContactUs,
+    forgotPasswordOTP,
+    forgotPwdChangePwd
 };
 
 function login(username, password,toggle) {
@@ -394,6 +396,50 @@ function submitContactUs(data){
             );
     };
 
+    function startLoader() { return { type: constants.SHOW_LOADER } }
+    function stopLoader() { return {type: constants.HIDE_LOADER}}
+}
+
+function forgotPasswordOTP(num,resend){
+    return dispatch => {
+        dispatch(startLoader());
+        return userService.forgotPasswordOTP(num,resend)
+        .then(
+            data => {
+                dispatch(stopLoader());
+                return data;
+            },
+            error => {
+                dispatch(stopLoader());
+                return {
+                    type:'error',
+                    message:error
+                };
+            }
+        );
+    };
+    function startLoader() { return { type: constants.SHOW_LOADER } }
+    function stopLoader() { return {type: constants.HIDE_LOADER}}
+}
+
+function forgotPwdChangePwd(otp,pwd,mobile){
+    return dispatch => {
+        dispatch(startLoader());
+        return userService.forgotPwdChangePwd(otp,pwd,mobile)
+        .then(
+            data => {
+                dispatch(stopLoader());
+                return data;
+            },
+            error => {
+                dispatch(stopLoader());
+                return {
+                    type:'error',
+                    message:error
+                };
+            }
+        );
+    };
     function startLoader() { return { type: constants.SHOW_LOADER } }
     function stopLoader() { return {type: constants.HIDE_LOADER}}
 }

@@ -12,7 +12,9 @@ export const userService = {
     editAddress,
     removeAddress,
     getMyOrders,
-    submitContactUs
+    submitContactUs,
+    forgotPasswordOTP,
+    forgotPwdChangePwd
 };
 
 function login(username, password) {
@@ -180,6 +182,34 @@ function submitContactUs(data){
     };
 
     return fetch(`${apiUrl.url}/users/contactUs`, requestOptions)
+    .then(handleResponse)
+    .then(res => {
+        return res;
+    });
+}
+
+function forgotPasswordOTP(num,resend){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({mobile:num, resend:resend})
+    };
+
+    return fetch(`${apiUrl.url}/users/sendOTP`, requestOptions)
+    .then(handleResponse)
+    .then(res => {
+        return res;
+    });
+}
+
+function forgotPwdChangePwd(otp,pwd,mobile){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({otp,pwd,mobile})
+    };
+
+    return fetch(`${apiUrl.url}/users/changePassword`, requestOptions)
     .then(handleResponse)
     .then(res => {
         return res;

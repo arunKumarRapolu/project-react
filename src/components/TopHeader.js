@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, 
-    MDBModalFooter,MDBRow, MDBCol, MDBInput} from "mdbreact";
+    MDBModalFooter,MDBRow, MDBCol, MDBInput, MDBLink} from "mdbreact";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 import { connect } from 'react-redux';
 import {ToastsContainer, ToastsStore, ToastsContainerPosition} from 'react-toasts';
-import logo from "../images/logo.jpg"
+import logo from "../images/sampleLogo.png"
 
 import { userActions } from '../actions/userActions';
 
@@ -31,11 +31,30 @@ class TopHeader extends Component {
             reg_pwd_valid:true,
             reg_cnf_pwd:null,
             reg_cnf_pwd_valid:true,
-            change_variable : false
+            change_variable : false,
+            smsSent: false,
+            fgpwApiError: null,
+            fgpd_mobile_valid:true,
+            fgpd_mobile:'',
+            fgpd_pwd_valid:true,
+            fgpd_pwd:null,
+            fgpd_cnf_pwd_valid:true,
+            fgpd_cnf_pwd:null,
+            showFgpdSuccess:false,
+            modal15:false,
+            fgpd_otp_valid:true,
+            fgpd_otp:'',
+            resendCount:2,
+            showOTPresend:false,
+            showFgpdFail:false,
+            fgpwdFailMessage:''
+
           };
           this.handleSubmit = this.handleSubmit.bind(this);
           this.gotoSignUp = this.gotoSignUp.bind(this);
           this.toggle = this.toggle.bind(this);
+          this.toggleFpd = this.toggleFpd.bind(this);
+          this.fgpdHandleSubmit = this.fgpdHandleSubmit.bind(this);
     }
     
       
@@ -62,7 +81,30 @@ class TopHeader extends Component {
           reg_pwd:null,
           reg_pwd_valid:true,
           reg_cnf_pwd:null,
-          reg_cnf_pwd_valid:true
+          reg_cnf_pwd_valid:true,
+          modal15:false
+        });
+      }
+      toggleFpd = nr => () => {
+        let modalNumber = 'modal' + nr;
+        this.setState({
+          [modalNumber]: !this.state[modalNumber],
+          fgpwApiError: null,
+          fgpd_mobile_valid:true,
+          fgpd_mobile:'',
+          fgpd_pwd_valid:true,
+          fgpd_pwd:null,
+          fgpd_cnf_pwd_valid:true,
+          fgpd_cnf_pwd:null,
+          showFgpdSuccess:false,
+          modal14:false,
+          smsSent:false,
+          fgpd_otp_valid:true,
+          fgpd_otp:'',
+          resendCount:2,
+          showOTPresend:false,
+          showFgpdFail:false,
+          fgpwdFailMessage:''
         });
       }
       gotoSignUp(){
@@ -164,10 +206,59 @@ class TopHeader extends Component {
         }
       }
     }
+    async fgpdHandleSubmit(e) {
+      e.preventDefault();
+    if(this.state.smsSent){
+        let otpreg = /^\d{5}$/;
+        let final_proceed = true;
+        let otp = this.state.fgpd_otp
+      if(otp == '' || (otp && !otp.match(otpreg))){
+        this.setState({fgpd_otp_valid:false})
+        final_proceed = false;
+      }
+      if(!this.state.fgpd_pwd || (this.state.fgpd_pwd.length < 8)){
+        this.setState({fgpd_pwd_valid:false})
+        final_proceed = false;
+      }
+      if(this.state.fgpd_pwd !== this.state.fgpd_cnf_pwd){
+        this.setState({fgpd_cnf_pwd_valid:false})
+        final_proceed = false;
+      }
+      if(final_proceed){
+          let changePwd = await this.props.changePwd(otp,this.state.fgpd_pwd,this.state.fgpd_mobile);
+          if(changePwd.type == 'success'){
+            this.setState({showFgpdSuccess:true,fgpd_cnf_pwd:'',fgpd_pwd:'',fgpd_otp:'',fgpwdFailMessage:'',showFgpdFail:false,showOTPresend:false});
+          }
+          else{
+            this.setState({showFgpdSuccess:false,fgpwdFailMessage:changePwd.message,showFgpdFail:true,showOTPresend:false});
+          }
+      }
+     }
+     else{
+        let phoneNum = this.state.fgpd_mobile
+        let phonenoreg = /^\d{10}$/;
+        let proceed = true;
+        if(phoneNum == '' || (phoneNum && !phoneNum.match(phonenoreg))){
+          this.setState({fgpd_mobile_valid:false})
+          proceed = false;
+        }
+        if(proceed){
+          //call send sms api
+          let sentOtp = await this.props.sendOTP(phoneNum,false);
+          if(sentOtp.type == 'success'){
+            this.setState({smsSent:true,fgpd_cnf_pwd:'',fgpd_pwd:'',fgpwApiError:''});
+          }
+          else{
+            this.setState({smsSent:false,fgpd_cnf_pwd:'',fgpd_pwd:'',fgpwApiError:sentOtp.message});
+          }
+        }
+     }
+    }
     changeHandler = event => {
       let name = event.target.name;
       let invalidEle = name+"_valid"
-      this.setState({ [event.target.name]: event.target.value , [invalidEle]:true });
+      this.setState({ [event.target.name]: event.target.value , [invalidEle]:true,fgpwApiError:'',showFgpdFail:false,
+      fgpwdFailMessage:''});
       if(this.state.signIn)
       this.props.clearSignInErrors()
       else
@@ -206,14 +297,23 @@ class TopHeader extends Component {
         this.toggle(14)();
       }
     }
+    resendOTP = async() => {
+      let resendCount = this.state.resendCount;
+      this.setState({resendCount:--resendCount,showOTPresend:false});
+      let sentOtp = await this.props.sendOTP(this.state.fgpd_mobile,true);
+      if(sentOtp.type == 'success'){
+        this.setState({showOTPresend:true});
+      }
+    }
     render() {
         return (
           <div>
             <MDBNavbar color="default-color" dark expand="md" className="mainHeader">
             <div className="container">
-        <MDBNavbarBrand>
+        <MDBNavbarBrand className="navBrand">
         <MDBNavLink to="/">
-          <strong className="white-text">Navbar</strong>
+          {/* <strong className="white-text">Navbar</strong> */}
+          <img src={logo} width="100%"/>
           </MDBNavLink>
         </MDBNavbarBrand>
         <MDBNavbarToggler onClick={this.toggleCollapse} />
@@ -329,7 +429,7 @@ class TopHeader extends Component {
                 Not a User ? <a href="#" onClick={this.gotoSignUp}>Sign Up</a>
               </MDBCol>
               <MDBCol md="6" className="text-right">
-                <a href="#">Forgot Password</a>
+                <a href="#" onClick={this.toggleFpd(15)}>Forgot Password</a>
               </MDBCol>
             </MDBRow>
         </MDBCol>
@@ -422,6 +522,102 @@ class TopHeader extends Component {
       </MDBModalFooter>
       </form>
     </MDBModal>
+    <MDBModal isOpen={this.state.modal15} toggle={this.toggleFpd(15)} centered modalClassName="topHeaderModal">
+      <form>
+      <MDBModalHeader toggle={this.toggleFpd(15)}>{this.state.smsSent ? "Change Password" : "Forgot Password"}</MDBModalHeader>
+      <MDBModalBody>
+      {!this.state.smsSent ?
+      <MDBRow>
+        <MDBCol md="12">
+            <div className="grey-text signInForm">
+            {this.state.fgpwApiError ? <div className="text-center signInErrMsg">{this.state.fgpwApiError}</div> : null}
+            <div className="fgpdMessage text-center">Please enter mobile number associated with your account<br/>We will send OTP to entered mobile number</div>
+              <MDBInput
+                label="Mobile number"
+                icon="phone"
+                className={this.state.fgpd_mobile_valid ? "form-control" :"form-control is-invalid"}
+                value={this.state.fgpd_mobile}
+                onChange={this.changeHandler.bind(this)}
+                error="wrong"
+                success="right"
+                name="fgpd_mobile"
+              />
+              <div className={this.state.fgpd_mobile_valid ? "hide" :"show invalidMsg"}>
+                Please enter valid mobile number.
+              </div>
+            </div>
+        </MDBCol>
+      </MDBRow> :
+      <MDBRow>
+      <MDBCol md="12">
+          <div className="grey-text signInForm">
+          <MDBInput
+              label="Enter OTP"
+              icon="comment"
+              group
+              type="text"
+              className={this.state.fgpd_otp_valid ? "form-control" :"form-control is-invalid"}
+              value={this.state.fgpd_otp}
+              onChange={this.changeHandler.bind(this)}
+              name="fgpd_otp"
+            />
+            <div className={this.state.fgpd_otp_valid ? "hide" :"show invalidMsg"}>
+                Enter valid OTP
+            </div>
+          <MDBInput
+              label="Your password"
+              icon="lock"
+              group
+              type="password"
+              className={this.state.fgpd_pwd_valid ? "form-control" :"form-control is-invalid"}
+              value={this.state.fgpd_pwd}
+              onChange={this.changeHandler.bind(this)}
+              name="fgpd_pwd"
+            />
+            <div className={this.state.fgpd_pwd_valid ? "hide" :"show invalidMsg"}>
+                Please enter valid password (Password must contains 8 characters).
+            </div>
+          <MDBInput
+              label="Confirm your password"
+              icon="exclamation-triangle"
+              group
+              type="password"
+              error="wrong"
+              success="right"
+              className={this.state.fgpd_cnf_pwd_valid ? "form-control" :"form-control is-invalid"}
+              value={this.state.fgpd_cnf_pwd}
+              onChange={this.changeHandler.bind(this)}
+              name="fgpd_cnf_pwd"
+            />
+            <div className={this.state.fgpd_cnf_pwd_valid ? "hide" :"show invalidMsg"}>
+                Passwords mismatching
+            </div>
+            {this.state.resendCount > 0 ?<a className="fgpdResendLink" onClick={this.resendOTP.bind(this)}>Resend OTP</a>:null}
+            {this.state.showOTPresend ? <span className="fgpdResendMsg">OTP sent</span>:null}
+            {this.state.showFgpdSuccess ?
+            <> 
+            <div className="text-center fgpdChangePwdSuccess">
+              Your Password changed successfully. Click on Sign in to enter your account
+            </div>
+            <center><a className="fgpdSignInLink" onClick={this.toggle(14)}>Sign In</a></center></>
+             : null }
+             {this.state.showFgpdFail ?
+            <div className="text-center fgpdChangePwdFail">
+              {this.state.fgpwdFailMessage}
+            </div>
+             : null }
+          </div>
+      </MDBCol>
+    </MDBRow>
+    }
+      </MDBModalBody>
+      {!this.state.showFgpdSuccess ?
+      <MDBModalFooter>
+        <MDBBtn color="secondary" onClick={this.toggleFpd(15)}>Close</MDBBtn>
+        <MDBBtn type= "submit" color="primary" onClick={this.fgpdHandleSubmit} >{this.state.smsSent ? "Change Password" : "Send SMS"}</MDBBtn>
+      </MDBModalFooter> : null }
+      </form>
+    </MDBModal>
     <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.BOTTOM_CENTER} lightBackground/>
     </div>
         )
@@ -457,7 +653,9 @@ const actionCreators = {
   register: userActions.register,
   clearSignInErrors: userActions.clearSignInErrors,
   clearSignUpErrors: userActions.clearSignUpErrors,
-  saveLinkAfterLogin: userActions.saveLinkAfterLogin
+  saveLinkAfterLogin: userActions.saveLinkAfterLogin,
+  sendOTP: userActions.forgotPasswordOTP,
+  changePwd: userActions.forgotPwdChangePwd
 };
 
 

@@ -18,9 +18,17 @@ class Main extends Component {
             this.props.getUserDetails(auth.mobile, auth.password);
         }
     }
+    componentDidUpdate(){
+        // if (document.getElementsByClassName('loaderSpinner')[0].style.display = 'none') {
+        //     document.getElementsByClassName('modal')[0].style.zindex = '1024';
+        //   }
+        //   else{
+        //     document.getElementsByClassName('modal')[0].style.zindex = '700';
+        //   }
+    }
     render() {
         return (
-            <LoadingOverlay active={this.props.showLoader} spinner styles={{"z-index":"2000"}}>
+            <LoadingOverlay active={this.props.showLoader} className="loaderSpinner" spinner styles={{"z-index":"2000"}}>
                 <TopHeader />
                 {this.props.children}
                 {/* <BottomFooter className="bottomFooter "/> */}
